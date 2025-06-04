@@ -1,0 +1,368 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2575.6">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="en"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;Interactive Sports Summit Content Strategy&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.jsdelivr.net/npm/chart.js"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;link rel="preconnect" href="https://fonts.googleapis.com"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;link rel="preconnect" href="https://fonts.gstatic.com" crossorigin&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Chosen Palette: Calm Harmony --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Application Structure Plan: The application is designed as an audience-centric, single-page dashboard. The core interaction is a top-level navigation that allows the user to select one of three audiences (Athletes, Family Offices, or Business Leaders). This selection acts as a filter, dynamically updating all content modules on the page, including profile descriptions, key topics of interest (presented as interactive cards), content consumption habits (visualized with a dynamic Chart.js polar area chart), and a strategic content timeline. This structure was chosen to directly compare and contrast the needs of the distinct audiences, making the report's key findings more digestible and explorable than a linear document. It transforms the strategic plan from a static report into a practical tool for understanding stakeholder needs. --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Visualization &amp; Content Choices: Report Info: Audience content preferences. -&gt; Goal: Compare preferences visually. -&gt; Viz/Presentation Method: Dynamic Polar Area Chart. -&gt; Interaction: Chart data updates when the user clicks an audience navigation button. -&gt; Justification: A chart provides a much faster, more intuitive way to compare the relative importance of different content formats (e.g., workshops vs. whitepapers) for each audience than reading lists or tables. Library/Method: Chart.js. | Report Info: Key topics for each audience. -&gt; Goal: Organize and present key themes. -&gt; Viz/Presentation Method: Interactive Cards. -&gt; Interaction: Hover effects for engagement. -&gt; Justification: Cards break down complex information into digestible chunks, improving scannability and focus. Library/Method: HTML/Tailwind CSS. | Report Info: Content timeline. -&gt; Goal: Show the multi-phase engagement plan. -&gt; Viz/Presentation Method: A tabbed timeline interface. -&gt; Interaction: User clicks tabs (Pre-Summit, During, Post-Summit) to view specific actions for the selected audience. -&gt; Justification: A tabbed view organizes the dense timeline information cleanly, preventing cognitive overload and allowing the user to focus on one phase at a time. Library/Method: HTML/Tailwind/JS. --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>body {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-family: 'Inter', sans-serif;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.chart-container {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: relative;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin: auto;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>height: 350px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>max-width: 400px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.nav-button {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transition: all 0.3s ease;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.nav-button.active {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #1e3a8a;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: #ffffff;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.content-card {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.content-card:hover {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transform: translateY(-5px);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.timeline-tab.active {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-bottom: 2px solid #1e3a8a;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: #1e3a8a;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-weight: 600;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.fade-in {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>animation: fadeIn 0.5s ease-in-out;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>@keyframes fadeIn {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>from { opacity: 0; transform: translateY(10px); }</p>
+<p class="p1"><span class="Apple-converted-space">            </span>to { opacity: 1; transform: translateY(0); }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body class="bg-gray-50 text-gray-800"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="container mx-auto p-4 sm:p-6 md:p-8"&gt;</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;header class="text-center mb-8 md:mb-12"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h1 class="text-3xl md:text-4xl font-bold text-gray-900"&gt;Sports Advisory Summit&lt;/h1&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="text-lg md:text-xl text-gray-600 mt-2"&gt;Interactive Content Strategy Dashboard&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/header&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;nav class="flex justify-center items-center bg-white rounded-xl shadow-sm p-2 mb-8 md:mb-12 sticky top-4 z-10"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button id="nav-athletes" class="nav-button flex-1 text-center py-2 px-4 rounded-lg text-sm sm:text-base font-medium text-gray-700"&gt;Athletes &amp; Managers&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button id="nav-familyoffices" class="nav-button flex-1 text-center py-2 px-4 rounded-lg text-sm sm:text-base font-medium text-gray-700"&gt;Family Offices&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button id="nav-business" class="nav-button flex-1 text-center py-2 px-4 rounded-lg text-sm sm:text-base font-medium text-gray-700"&gt;Business Leaders&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/nav&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;main id="main-content"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/main&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const audienceData = {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>athletes: {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>title: "Professional Athletes &amp; Business Managers",</p>
+<p class="p1"><span class="Apple-converted-space">                </span>profile: "This group faces unique financial challenges due to sudden wealth, short careers, and public profiles. They require foundational financial education, long-term planning, and guidance on risk and complex tax situations. Their business managers act as key intermediaries, seeking sophisticated strategies to maximize client earnings and stability.",</p>
+<p class="p1"><span class="Apple-converted-space">                </span>topics: [</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>{ title: "Financial Literacy", description: "Budgeting, saving, investing fundamentals, and credit management.", icon: "🎓" },</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>{ title: "Wealth Preservation", description: "Long-term security, retirement planning, and post-career transition.", icon: "🏛️" },</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>{ title: "Risk Management", description: "Identity protection, fraud prevention, and comprehensive insurance.", icon: "🛡️" },</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>{ title: "Behavioral Finance", description: "Managing sudden wealth, family financial requests, and psychological pressures.", icon: "🧠" },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>],</p>
+<p class="p1"><span class="Apple-converted-space">                </span>formats: {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>labels: ['Interactive Workshops', 'One-on-One Counseling', 'Digital Learning (Apps/Webinars)', 'Articles &amp; Podcasts'],</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>data: [35, 30, 25, 10],</p>
+<p class="p1"><span class="Apple-converted-space">                </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>timeline: {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>pre: [</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ title: "Introductory Articles", content: "Release blog posts on 'Financial Do's and Don'ts' and 'Building Your Financial Team'." },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ title: "Targeted Webinar", content: "Host a webinar on 'Strategic Tax Planning for Multi-State Athletes'." },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ title: "Practical Checklist", content: "Launch a 'Financial Health Checklist' to drive engagement." }</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>],</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>during: [</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ title: "Interactive Workshops", content: "Hands-on sessions covering budgeting tools, tax strategies, and fraud prevention." },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ title: "One-on-One Advisory", content: "Pre-scheduled personalized consultations with financial specialists." },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ title: "Focused Breakouts", content: "Sessions on NIL implications, brand management, and post-career planning." }</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>],</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>post: [</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ title: "Highlights Reel", content: "Curate a short video with key financial literacy takeaways from the summit." },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ title: "Online Course Module", content: "Launch a structured module on 'Retirement Planning for Pro Athletes'." },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ title: "Interactive Tools", content: "Provide online budgeting or investment calculators to reinforce learning." }</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>]</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>},</p>
+<p class="p1"><span class="Apple-converted-space">            </span>familyoffices: {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>title: "Family Offices for Athletes &amp; Entertainers",</p>
+<p class="p1"><span class="Apple-converted-space">                </span>profile: "Sophisticated and discerning, this audience manages significant, often multi-generational wealth. They prioritize deep, data-driven expertise on complex investment strategies, alternative markets, and robust cybersecurity. Building trust through exclusive, high-touch engagement is paramount.",</p>
+<p class="p1"><span class="Apple-converted-space">                </span>topics: [</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>{ title: "Alternative Investments", description: "Private equity, real estate, venture capital, and 'Sport as an Asset Class'.", icon: "💼" },</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>{ title: "Cybersecurity", description: "Safeguarding assets and sensitive information from sophisticated digital threats.", icon: "🔒" },</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>{ title: "Family Governance", description: "Intergenerational wealth transfer, legacy planning, and next-gen education.", icon: "👨‍👩‍👧‍👦" },</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>{ title: "ESG &amp; Impact Investing", description: "Aligning investment strategies with family values and long-term goals.", icon: "🌱" },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>],</p>
+<p class="p1"><span class="Apple-converted-space">                </span>formats: {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>labels: ['In-depth Reports &amp; Whitepapers', 'Exclusive Events &amp; Webinars', 'One-on-One Consultations', 'Curated Articles'],</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>data: [40, 30, 25, 5],</p>
+<p class="p1"><span class="Apple-converted-space">                </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>timeline: {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>pre: [</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ title: "Executive Summary", content: "Distribute a report on 'Key Trends in Family Office Wealth Management'." },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ title: "Expert Article", content: "Publish a piece on 'Private Investment Opportunities in Sports &amp; Entertainment'." },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ title: "Cybersecurity Whitepaper", content: "Release a detailed guide on 'Cybersecurity Imperatives for UHNW Families'." }</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>],</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>during: [</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ title: "Advanced Workshops", content: "Deep dives into alternative investment due diligence and cybersecurity protocols." },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ title: "Exclusive Panels", content: "Discussions on 'Sport as an Asset Class' and integrating AI in office operations." },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ title: "Private Consultations", content: "Bespoke wealth management and investment strategy sessions." }</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>],</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>post: [</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ title: "Comprehensive Report", content: "Publish a 'Family Office Investment Outlook' integrating summit insights." },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ title: "Follow-up Webinar", content: "Host an expert Q&amp;A on implementing advanced tax and estate planning strategies." },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ title: "Exclusive Insights", content: "Deliver ongoing, personalized market analysis via a secure digital portal." }</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>]</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>},</p>
+<p class="p1"><span class="Apple-converted-space">            </span>business: {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>title: "Business Decision Makers in Sports &amp; Media",</p>
+<p class="p1"><span class="Apple-converted-space">                </span>profile: "Time-constrained and strategic, these executives operate in a rapidly evolving landscape. They need actionable, data-driven intelligence on industry trends, revenue generation, fan engagement, and technology. They value peer insights and concise, high-level content that informs critical business decisions.",</p>
+<p class="p1"><span class="Apple-converted-space">                </span>topics: [</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>{ title: "Media Rights &amp; Streaming", description: "Navigating the shift to streaming, content fragmentation, and new monetization models.", icon: "📺" },</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>{ title: "Fan Engagement &amp; AI", description: "Leveraging technology for personalized experiences and operational efficiency.", icon: "🤖" },</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>{ title: "Investment &amp; Growth", description: "Sports-anchored districts, tech investments, and emerging leagues.", icon: "📈" },</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>{ title: "Business Model Innovation", description: "Developing smarter sponsorships and new, resilient revenue streams.", icon: "💡" },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>],</p>
+<p class="p1"><span class="Apple-converted-space">                </span>formats: {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>labels: ['Reports &amp; Executive Summaries', 'Expert Panels &amp; Conferences', 'Targeted Newsletters', 'Podcasts &amp; Short Videos'],</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>data: [35, 30, 20, 15],</p>
+<p class="p1"><span class="Apple-converted-space">                </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>timeline: {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>pre: [</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ title: "Industry Outlook", content: "Publish an article on 'Top Trends in Sports &amp; Media for 2025'." },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ title: "Virtual Roundtable", content: "Host a discussion on 'The Streaming Wars: Monetization &amp; Media Rights'." },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ title: "AI Case Study", content: "Release a report on 'Leveraging AI for Fan Engagement &amp; Revenue Growth'." }</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>],</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>during: [</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ title: "Variety-Hosted Panel", content: "A marquee event on media monetization, talent branding, and industry convergence." },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ title: "Strategic Breakouts", content: "Case studies on successful digital transformation and new revenue streams." },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ title: "Networking Receptions", content: "Structured opportunities to connect with peers and industry leaders." }</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>],</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>post: [</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ title: "Post-Summit Outlook", content: "Publish a 'Sports &amp; Media Industry Report' informed by summit discussions." },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ title: "Case Study Deep Dive", content: "Release a detailed analysis of a successful sports sponsorship discussed at the summit." },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ title: "Expert Q&amp;A Session", content: "Host a follow-up webinar on implementing new fan engagement technologies." }</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>]</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const mainContent = document.getElementById('main-content');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>let contentChart = null;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function createAudienceView(audienceKey) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const data = audienceData[audienceKey];</p>
+<p class="p1"><span class="Apple-converted-space">            </span>mainContent.innerHTML = '';</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const contentContainer = document.createElement('div');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>contentContainer.className = 'fade-in';</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>contentContainer.innerHTML = `</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;section id="audience-profile" class="mb-8 md:mb-12"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="bg-white p-6 rounded-xl shadow-lg"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h2 class="text-2xl font-bold text-gray-800 mb-3"&gt;${data.title}&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p class="text-gray-600 leading-relaxed"&gt;${data.profile}&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;section id="key-topics" class="mb-8 md:mb-12"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h3 class="text-2xl font-bold text-center mb-6 text-gray-800"&gt;Key Topics of Interest&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>${data.topics.map(topic =&gt; `</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="content-card bg-white p-6 rounded-xl shadow-md flex flex-col items-center text-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;div class="text-4xl mb-3"&gt;${topic.icon}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;h4 class="text-lg font-semibold text-gray-800 mb-2"&gt;${topic.title}&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;p class="text-gray-600 text-sm"&gt;${topic.description}&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>`).join('')}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 mb-8 md:mb-12"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;section id="content-formats"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3 class="text-2xl font-bold text-center mb-6 text-gray-800"&gt;Preferred Content Formats&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p class="text-center text-gray-600 mb-4 text-sm max-w-md mx-auto"&gt;This chart shows the preferred methods for receiving information, highlighting the most effective channels for engagement with this audience.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="bg-white p-4 rounded-xl shadow-lg"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="chart-container"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;canvas id="content-chart"&gt;&lt;/canvas&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/section&gt;</p>
+<p class="p2"><span class="Apple-converted-space">                    </span></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;section id="content-timeline"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3 class="text-2xl font-bold text-center mb-6 text-gray-800"&gt;Strategic Content Timeline&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p class="text-center text-gray-600 mb-4 text-sm max-w-md mx-auto"&gt;This timeline outlines a multi-phase content journey to build and sustain engagement before, during, and after the summit.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="bg-white rounded-xl shadow-lg p-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="border-b border-gray-200"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;nav class="-mb-px flex space-x-4" aria-label="Tabs"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;button class="timeline-tab whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300 active" data-timeline="pre"&gt;Pre-Summit&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;button class="timeline-tab whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" data-timeline="during"&gt;During Summit&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;button class="timeline-tab whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" data-timeline="post"&gt;Post-Summit&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/nav&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div id="timeline-content" class="mt-6 space-y-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/section&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>`;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>mainContent.appendChild(contentContainer);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>createChart(data.formats.labels, data.formats.data);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>updateTimelineContent(audienceKey, 'pre');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>setupTimelineTabs(audienceKey);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function createChart(labels, data) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const ctx = document.getElementById('content-chart').getContext('2d');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (contentChart) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>contentChart.destroy();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>contentChart = new Chart(ctx, {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>type: 'polarArea',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>data: {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>labels: labels,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>datasets: [{</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>label: 'Format Preference',</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>data: data,</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>backgroundColor: [</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>'rgba(30, 58, 138, 0.7)',</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>'rgba(67, 56, 202, 0.7)',</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>'rgba(29, 78, 216, 0.7)',</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>'rgba(30, 64, 175, 0.7)'</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>],</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>borderColor: [</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>'rgb(30, 58, 138)',</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>'rgb(67, 56, 202)',</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>'rgb(29, 78, 216)',</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>'rgb(30, 64, 175)'</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>],</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>borderWidth: 1</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}]</p>
+<p class="p1"><span class="Apple-converted-space">                </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>options: {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>responsive: true,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>maintainAspectRatio: false,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>scales: {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>r: {</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>pointLabels: {</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>display: true,</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>centerPointLabels: true,</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>font: {</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>size: 11</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>ticks: {</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>backdropColor: 'rgba(255, 255, 255, 0.75)'</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>plugins: {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>legend: {</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>position: 'bottom',</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>labels: {</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>font: {</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>size: 12</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>tooltip: {</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>callbacks: {</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>label: function(context) {</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>return `${context.label}: ${context.raw}%`;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function updateTimelineContent(audienceKey, phase) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const timelineContentEl = document.getElementById('timeline-content');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const data = audienceData[audienceKey].timeline[phase];</p>
+<p class="p1"><span class="Apple-converted-space">            </span>timelineContentEl.innerHTML = data.map(item =&gt; `</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="fade-in"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h5 class="font-semibold text-gray-800"&gt;${item.title}&lt;/h5&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p class="text-sm text-gray-600"&gt;${item.content}&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>`).join('');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function setupTimelineTabs(audienceKey) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const tabs = document.querySelectorAll('.timeline-tab');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>tabs.forEach(tab =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>tab.addEventListener('click', () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>tabs.forEach(t =&gt; t.classList.remove('active'));</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>tab.classList.add('active');</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>updateTimelineContent(audienceKey, tab.dataset.timeline);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>});</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function setActiveNav(buttonId) {</p>
+<p class="p1"><span class="Apple-converted-space">             </span>['nav-athletes', 'nav-familyoffices', 'nav-business'].forEach(id =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>document.getElementById(id).classList.remove('active');</p>
+<p class="p1"><span class="Apple-converted-space">             </span>});</p>
+<p class="p1"><span class="Apple-converted-space">             </span>document.getElementById(buttonId).classList.add('active');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById('nav-athletes').addEventListener('click', () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>createAudienceView('athletes');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>setActiveNav('nav-athletes');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById('nav-familyoffices').addEventListener('click', () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>createAudienceView('familyoffices');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>setActiveNav('nav-familyoffices');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById('nav-business').addEventListener('click', () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>createAudienceView('business');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>setActiveNav('nav-business');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>window.onload = () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>createAudienceView('athletes');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>setActiveNav('nav-athletes');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
